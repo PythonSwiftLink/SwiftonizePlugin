@@ -1,2 +1,6 @@
 
 .DS_Store
+*.resolved
+.swiftpm/xcode/package.xcworkspace/xcuserdata/codebuilder.xcuserdatad/UserInterfaceState.xcuserstate
+.swiftpm/xcode/package.xcworkspace/contents.xcworkspacedata
+.swiftpm/xcode/xcuserdata/codebuilder.xcuserdatad/xcschemes/xcschememanagement.plist
