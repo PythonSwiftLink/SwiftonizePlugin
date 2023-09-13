@@ -35,7 +35,7 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
     func createBuildCommands(context: XcodePluginContext, target: XcodeTarget) throws -> [Command] {
         
         
-        let input = context.xcodeProject.directory.appending(subpath: "wrappers")
+        let input = context.xcodeProject.directory.appending(subpath: "wrapper_sources")
         print(input)
         let resourcesDirectoryPath = context.pluginWorkDirectory
             .appending(subpath: target.displayName)
