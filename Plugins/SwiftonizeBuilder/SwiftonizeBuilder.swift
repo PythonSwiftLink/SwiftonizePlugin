@@ -10,7 +10,7 @@ enum SwiftonizeError: Error {
 	case fileNotFound(path: String)
 }
 
-let SwiftonizeExec: Path = .init("/usr/local/bin/Swiftonize/SwiftonizeExec")
+let SwiftonizeExec: Path = .init("/usr/local/bin/Swiftonize")
 let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
 let python_extra = "/usr/local/bin/Swiftonize/python-extra"
 @main
@@ -45,8 +45,8 @@ struct SwiftonizeBuilder: BuildToolPlugin {
 			"generate",
 			input,
 			context.pluginWorkDirectory,
-			python_stdlib,
-			python_extra
+//			python_stdlib,
+//			python_extra
 		]
 		
 		return [
@@ -119,8 +119,8 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
 			"generate",
 			input,
 			rswiftPath.string,
-			python_stdlib,
-			python_extra
+//			python_stdlib,
+//			python_extra
 		]
 		if let site_path = config?.python_site_path {
 			arguments.append("--site \(site_path)")
