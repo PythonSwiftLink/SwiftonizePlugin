@@ -10,7 +10,7 @@ enum SwiftonizeError: Error {
 	case fileNotFound(path: String)
 }
 
-let SwiftonizeExec: Path = .init("/usr/local/bin/Swiftonize")
+let SwiftonizeExec: Path = .init("swiftonize") //.init("/usr/local/bin/Swiftonize")
 let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
 let python_extra = "/usr/local/bin/Swiftonize/python-extra"
 @main
