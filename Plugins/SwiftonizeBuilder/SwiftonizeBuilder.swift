@@ -10,7 +10,12 @@ enum SwiftonizeError: Error {
 	case fileNotFound(path: String)
 }
 
-let SwiftonizeExec: Path = .init("swiftonize") //.init("/usr/local/bin/Swiftonize")
+#if arch(arm64)
+let SwiftonizeExec: Path = .init("/opt/homebrew/bin/Swiftonize")
+#else
+let SwiftonizeExec: Path =  .init("/usr/local/bin/Swiftonize")
+#endif
+
 let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
 let python_extra = "/usr/local/bin/Swiftonize/python-extra"
 @main
@@ -19,7 +24,7 @@ struct SwiftonizeBuilder: BuildToolPlugin {
     func createBuildCommands(context: PluginContext, target: Target) async throws -> [Command] {
         // This plugin only runs for package targets that can have source files.
         guard let sourceFiles = target.sourceModule?.sourceFiles else { return [] }
-
+		
         // Find the code generator tool to run (replace this with the actual one).
         //let generatorTool = try context.tool(named: "SwiftonizeBuilder")
 		print("target.name",target.name)
@@ -48,7 +53,7 @@ struct SwiftonizeBuilder: BuildToolPlugin {
 //			python_stdlib,
 //			python_extra
 		]
-		
+
 		return [
 			.buildCommand(
 				displayName: "Swiftonize(\(context.package.displayName))",
@@ -72,6 +77,7 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
         // Construct a build command for each source file with a particular suffix.
         return target.inputFiles.map(\.path).compactMap {
             createBuildCommand(for: $0, in: context.pluginWorkDirectory, with: generatorTool.path)
+			
         }
     }
     
@@ -126,21 +132,12 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
 			arguments.append("--site \(site_path)")
 		}
         return [
-            
-//            .buildCommand(
-//                displayName: "Swiftonize(\(description))",
-//                executable: try context.tool(named: "swiftonize").path,
-//                arguments: arguments,
-//                outputFiles: outputFiles
-//            )
 			.buildCommand(
 			displayName: "Swiftonize(\(description))",
 			executable: SwiftonizeExec,
 			arguments: arguments,
 			outputFiles: outputFiles
 			)
-			//.buildCommand(displayName: <#T##String?#>, executable: context., arguments: <#T##[CustomStringConvertible]#>)
-        
         ]
     }
     
