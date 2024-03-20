@@ -11,9 +11,9 @@ enum SwiftonizeError: Error {
 }
 
 #if arch(arm64)
-let SwiftonizeExec: Path = .init("/opt/homebrew/bin/Swiftonize")
+let SwiftonizeExec: Path = .init("/opt/homebrew/bin/swiftonize_dev")
 #else
-let SwiftonizeExec: Path =  .init("/usr/local/bin/Swiftonize")
+let SwiftonizeExec: Path =  .init("/usr/local/bin/swiftonize_dev"
 #endif
 
 let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
