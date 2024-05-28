@@ -11,9 +11,10 @@ enum SwiftonizeError: Error {
 }
 
 #if arch(arm64)
-let SwiftonizeExec: Path = .init("/opt/homebrew/bin/swiftonize_dev")
+let SwiftonizeExec: Path = .init("/opt/homebrew/bin/Swiftonize_dev")
 #else
-let SwiftonizeExec: Path =  .init("/usr/local/bin/swiftonize_dev"
+let SwiftonizeExec: Path =  .init("/usr/local/bin/Swiftonize_dev")
+//let SwiftonizeExec: Path = .init("/Volumes/CodeSSD/PSL-development/SwiftonizeExec-development/SwiftonizeBin")
 #endif
 
 let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
@@ -34,22 +35,25 @@ struct SwiftonizeBuilder: BuildToolPlugin {
 		print("context.package.directory",context.package.directory)
 		
 		let input = target.directory.appending(subpath: "wrappers")
-		
+		//let input = context.pluginWorkDirectory.appending(subpath: "jsons")
 		let outputFiles = try FileManager.default.contentsOfDirectory(atPath: input.string).compactMap({ file -> Path? in
 			let _file = Path(file)
 			if _file.lastComponent == ".DS_Store" { return nil }
+			guard _file.extension == "json" else { return nil }
 			let root = context.pluginWorkDirectory
 			let name = _file.stem
 			return root.appending(subpath: "\(name).swift")
 		})
+		
         // Construct a build command for each source file with a particular suffix.
 //        return sourceFiles.map(\.path).compactMap {
 //            createBuildCommand(for: $0, in: context.pluginWorkDirectory, with: generatorTool.path)
 //        }
 		var arguments: [CustomStringConvertible] = [
-			"generate",
+			"json",
 			input,
 			context.pluginWorkDirectory,
+			//"--site", "/Users/codebuilder/Library/Mobile Documents/com~apple~CloudDocs/Projects/xcode_projects/touchBay_files/rebuild/touchBay/venv_test"
 //			python_stdlib,
 //			python_extra
 		]
@@ -114,23 +118,23 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
             description = target.displayName
         }
 		
-		var config: XcodeExtraConfig? = nil
-		do {
-			let configFile = context.xcodeProject.directory.appending(subpath: "config.json")
-			let configData = try Data(contentsOf: .init(filePath: configFile.string))
-			config = try JSONDecoder().decode(XcodeExtraConfig.self, from: configData)
-		} catch _ {}
+//		var config: XcodeExtraConfig? = nil
+//		do {
+//			let configFile = context.xcodeProject.directory.appending(subpath: "config.json")
+//			let configData = try Data(contentsOf: .init(filePath: configFile.string))
+//			config = try JSONDecoder().decode(XcodeExtraConfig.self, from: configData)
+//		} catch _ {}
 		
 		var arguments: [CustomStringConvertible] = [
-			"generate",
+			"json",
 			input,
 			rswiftPath.string,
 //			python_stdlib,
 //			python_extra
 		]
-		if let site_path = config?.python_site_path {
-			arguments.append("--site \(site_path)")
-		}
+//		if let site_path = config?.python_site_path {
+//			arguments.append("--site \(site_path)")
+//		}
         return [
 			.buildCommand(
 			displayName: "Swiftonize(\(description))",

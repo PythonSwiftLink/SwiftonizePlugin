@@ -1,0 +1,52 @@
+{
+    "configurations": [
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftonizePlugin}",
+            "name": "Debug SwiftonizeExecutable",
+            "program": "${workspaceFolder:SwiftonizePlugin}/.build/debug/SwiftonizeExecutable",
+            "preLaunchTask": "swift: Build Debug SwiftonizeExecutable"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftonizePlugin}",
+            "name": "Release SwiftonizeExecutable",
+            "program": "${workspaceFolder:SwiftonizePlugin}/.build/release/SwiftonizeExecutable",
+            "preLaunchTask": "swift: Build Release SwiftonizeExecutable"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftonizePlugin}",
+            "name": "Debug PlayGrounds",
+            "program": "${workspaceFolder:SwiftonizePlugin}/.build/debug/PlayGrounds",
+            "preLaunchTask": "swift: Build Debug PlayGrounds"
+        },
+        {
+            "type": "lldb",
+            "request": "launch",
+            "sourceLanguages": [
+                "swift"
+            ],
+            "args": [],
+            "cwd": "${workspaceFolder:SwiftonizePlugin}",
+            "name": "Release PlayGrounds",
+            "program": "${workspaceFolder:SwiftonizePlugin}/.build/release/PlayGrounds",
+            "preLaunchTask": "swift: Build Release PlayGrounds"
+        }
+    ]
+}
