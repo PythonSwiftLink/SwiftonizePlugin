@@ -11,13 +11,13 @@ enum SwiftonizeError: Error {
 }
 
 #if arch(arm64)
-let SwiftonizeExec: Path = .init("/opt/homebrew/bin/Swiftonize")
+let SwiftonizeExec: Path = .init("/opt/homebrew/bin/pstoolchain")
 #else
-let SwiftonizeExec: Path =  .init("/usr/local/bin/Swiftonize")
+let SwiftonizeExec: Path =  .init("/usr/local/bin/pstoolchain")
 #endif
 
-let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
-let python_extra = "/usr/local/bin/Swiftonize/python-extra"
+//let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
+//let python_extra = "/usr/local/bin/Swiftonize/python-extra"
 @main
 struct SwiftonizeBuilder: BuildToolPlugin {
     /// Entry point for creating build commands for targets in Swift packages.
@@ -46,8 +46,9 @@ struct SwiftonizeBuilder: BuildToolPlugin {
 //        return sourceFiles.map(\.path).compactMap {
 //            createBuildCommand(for: $0, in: context.pluginWorkDirectory, with: generatorTool.path)
 //        }
-		var arguments: [CustomStringConvertible] = [
-			"generate",
+		let arguments: [CustomStringConvertible] = [
+			"swiftonize",
+			"build",
 			input,
 			context.pluginWorkDirectory,
 //			python_stdlib,
@@ -85,6 +86,7 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
         
         
         let input = context.xcodeProject.directory.appending(subpath: "wrapper_sources")
+		print("Swiftonize XC Plugin!!!")
         print(input)
         let resourcesDirectoryPath = context.pluginWorkDirectory
 //            .appending(subpath: target.displayName)
@@ -122,7 +124,8 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
 		} catch _ {}
 		
 		var arguments: [CustomStringConvertible] = [
-			"generate",
+			"swiftonize",
+			"build",
 			input,
 			rswiftPath.string,
 //			python_stdlib,

@@ -40,5 +40,6 @@ let package = Package(
 				//"swiftonize",
 			]
         ),
+		
     ]
 )
