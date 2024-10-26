@@ -11,9 +11,9 @@ enum SwiftonizeError: Error {
 }
 
 #if arch(arm64)
-let SwiftonizeExec: Path = .init("/opt/homebrew/bin/swiftonize_dev")
+let SwiftonizeExec: Path = .init("/opt/homebrew/bin/pstoolchain")
 #else
-let SwiftonizeExec: Path =  .init("/usr/local/bin/swiftonize_dev")
+let SwiftonizeExec: Path =  .init("/usr/local/bin/pstoolchain")
 #endif
 
 //let python_stdlib = "/usr/local/bin/Swiftonize/python_stdlib"
@@ -47,7 +47,8 @@ struct SwiftonizeBuilder: BuildToolPlugin {
 //            createBuildCommand(for: $0, in: context.pluginWorkDirectory, with: generatorTool.path)
 //        }
 		let arguments: [CustomStringConvertible] = [
-			"generate",
+			"swiftonize",
+			"build",
 			input,
 			context.pluginWorkDirectory,
 //			python_stdlib,
@@ -85,6 +86,7 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
         
         
         let input = context.xcodeProject.directory.appending(subpath: "wrapper_sources")
+		print("Swiftonize XC Plugin!!!")
         print(input)
         let resourcesDirectoryPath = context.pluginWorkDirectory
 //            .appending(subpath: target.displayName)
@@ -122,7 +124,8 @@ extension SwiftonizeBuilder: XcodeBuildToolPlugin {
 		} catch _ {}
 		
 		var arguments: [CustomStringConvertible] = [
-			"generate",
+			"swiftonize",
+			"build",
 			input,
 			rswiftPath.string,
 //			python_stdlib,
