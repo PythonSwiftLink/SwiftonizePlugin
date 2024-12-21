@@ -63,7 +63,7 @@ func processInputFiles(input: Path, root: Path) throws -> [Path] {
 extension Command {
     static func swiftonize(input: Path, context: PluginContext) throws -> Self {
         let arguments: [CustomStringConvertible] = [
-            "swiftonize",
+            //"swiftonize",
             "build",
             input,
             context.pluginWorkDirectory,
