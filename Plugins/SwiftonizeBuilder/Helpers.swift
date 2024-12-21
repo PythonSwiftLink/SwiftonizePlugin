@@ -31,7 +31,7 @@ func which_swiftonize() throws -> Path {
     let proc = Process()
     //proc.executableURL = .init(filePath: "/bin/zsh")
     proc.executableURL = .init(filePath: "/usr/bin/which")
-    proc.arguments = ["pstoolchain"]
+    proc.arguments = ["swiftonize"]
     let pipe = Pipe()
     
     proc.standardOutput = pipe
@@ -88,7 +88,7 @@ extension Command {
         let resourcesDirectoryPath = context.pluginWorkDirectory
         
         let arguments: [CustomStringConvertible] = [
-            "swiftonize",
+            //"swiftonize",
             "build",
             input,
             resourcesDirectoryPath,
