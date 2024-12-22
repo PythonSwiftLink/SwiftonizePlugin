@@ -56,7 +56,7 @@ func processInputFiles(input: Path, root: Path) throws -> [Path] {
         let _file = Path(file)
         if _file.lastComponent == ".DS_Store" { return nil }
         let name = _file.stem
-        return root.appending(subpath: "\(name).swift")
+        return root.appending(subpath: "_\(name).swift")
     })
 }
 
